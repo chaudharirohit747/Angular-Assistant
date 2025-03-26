@@ -1,0 +1,53 @@
+<div class="chat-container">
+  <div class="chat-wrapper">
+    <header class="chat-header">
+      <div class="header-content">
+        <div class="logo">
+          <mat-icon>AS</mat-icon>
+        </div>
+        <div class="title-section">
+          <h1>Angular Assistant</h1>
+          <!-- <p>Your AI companion for Angular development</p> -->
+          <p>It just a sample example created with the help of Windsurf AI by :- Rohit Chaudhuri.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="messages-container" #scrollContainer>
+      <div class="message-wrapper" *ngFor="let message of messages">
+        <div class="message" [ngClass]="message.sender">
+          <div class="avatar">
+            <mat-icon>{{message.sender === 'U' ? 'P' : 'AS'}}</mat-icon>
+          </div>
+          <div class="message-content">
+            <div class="message-text">{{message.content}}</div>
+            <div class="timestamp">{{message.timestamp | date:'shortTime'}}</div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isLoading" class="loading-indicator">
+        <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+      </div>
+    </div>
+
+    <footer class="chat-footer">
+      <form (ngSubmit)="sendMessage()" class="input-form">
+        <mat-form-field appearance="outline">
+          <input matInput
+                 [(ngModel)]="newMessage"
+                 name="message"
+                 placeholder="Ask me anything about Angular..."
+                 [disabled]="isLoading"
+                 autocomplete="off">
+        </mat-form-field>
+        <button mat-mini-fab 
+                color="primary"
+                type="submit"
+                [disabled]="!newMessage.trim() || isLoading"
+                matTooltip="Send message">
+          <mat-icon>Send</mat-icon>
+        </button>
+      </form>
+    </footer>
+  </div>
+</div>
